@@ -2,11 +2,15 @@
 
 set -ouex pipefail
 
-/ctx/desktop-steam.sh
+# desktop stuff (courtesy of bOS)
+case "${IMAGE}" in
+"aurora"*|"bluefin"*)
+  /ctx/desktop-changes.sh
+  /ctx/desktop-packages.sh
+  /ctx/desktop-steam.sh
+  ;;
+esac
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+# general stuff (also done on server)
+/ctx/general-packages.sh
+/ctx/signing.sh
